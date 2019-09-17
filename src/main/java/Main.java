@@ -1,11 +1,16 @@
-import com.sun.tools.javac.util.Pair;
+
 
 import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
-        ArrayList<Student> students = new ArrayList<Student>();
+           try {
+               ReadIn.readSheet();
+           }catch(Exception e){
+
+           }
+      /*  ArrayList<Student> students = new ArrayList<Student>();
         ArrayList<Room> classes = new ArrayList<Room>();
         Population population = new Population();
         ArrayList<RoomList> parents=new ArrayList<RoomList>();
@@ -111,6 +116,7 @@ public class Main {
                 }
             }
         }*/
+      /*
         GArun.initialPopulation(students, classes, population);
         Population childPop=population;
         int generationCount=0;
