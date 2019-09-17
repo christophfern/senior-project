@@ -13,6 +13,7 @@ public class Student{
     private boolean isAthlete;
 
 
+
         public void setName(String n){
             this.name=n;
         }

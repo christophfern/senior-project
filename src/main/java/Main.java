@@ -1,32 +1,71 @@
+import com.sun.tools.javac.util.Pair;
+
 import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
-        ArrayList<Student> students=new ArrayList<Student>();
-        ArrayList<Room> classes=new ArrayList<Room>();
-        Population population=new Population();
+        ArrayList<Student> students = new ArrayList<Student>();
+        ArrayList<Room> classes = new ArrayList<Room>();
+        Population population = new Population();
+        ArrayList<RoomList> parents=new ArrayList<RoomList>();
 
 
-        Student student=new Student();
+        Student student = new Student();
         student.setName("Chris");
-        Student student1=new Student();
+        student.setChoice1("Math");
+        Student student1 = new Student();
         student1.setName("Marc");
-        Student student2=new Student();
+        student1.setChoice1("Math");
+        Student student2 = new Student();
         student2.setName("Aaron");
-        Student student3=new Student();
+        student2.setChoice1("English");
+        Student student3 = new Student();
         student3.setName("Trevor");
-        Student student4=new Student();
+        student3.setChoice1("English");
+        Student student4 = new Student();
         student4.setName("Ross");
-        Student student5=new Student();
+        student4.setChoice1("English");
+        Student student5 = new Student();
         student5.setName("Luke");
-        Student student6=new Student();
+        student5.setChoice1("English");
+        Student student6 = new Student();
         student6.setName("Matt");
-        Student student7=new Student();
+        student6.setChoice1("English");
+        Student student7 = new Student();
         student7.setName("Tristan");
-        Student student8=new Student();
+        student7.setChoice1("English");
+        Student student8 = new Student();
         student8.setName("Will");
+        student8.setChoice1("English");
 
+        Student student9 = new Student();
+        student9.setName("Kyle");
+        student.setChoice1("Math");
+        Student student10 = new Student();
+        student10.setName("Zoe");
+        student10.setChoice1("Math");
+        Student student12 = new Student();
+        student12.setName("George");
+        student12.setChoice1("English");
+        Student student13 = new Student();
+        student13.setName("Jorge");
+        student13.setChoice1("English");
+        Student student14 = new Student();
+        student14.setName("Henry");
+        student14.setChoice1("English");
+        Student student15 = new Student();
+        student15.setName("Jenna");
+        student15.setChoice1("Math");
+        Student student16 = new Student();
+        student16.setName("Jack");
+        student16.setChoice1("Math");
+        Student student17 = new Student();
+        student17.setName("Justin");
+        student17.setChoice1("Math");
+        Student student18 = new Student();
+        student18.setName("Joe");
+        student18.setChoice1("Math");
 
         students.add(student);
         students.add(student1);
@@ -38,24 +77,77 @@ public class Main {
         students.add(student7);
         students.add(student8);
 
+        students.add(student9);
+        students.add(student10);
+        students.add(student12);
+        students.add(student13);
+        students.add(student14);
+        students.add(student15);
+        students.add(student16);
+        students.add(student17);
+        students.add(student18);
 
-        Room room=new Room();
-        Room room1=new Room();
+
+        Room room = new Room();
+        Room room1 = new Room();
         room.setName("Math");
         room1.setName("English");
+
+
         classes.add(room);
         classes.add(room1);
-        int studentsPerClass=students.size()/classes.size();
+        int studentsPerClass = students.size() / classes.size();
+
         room.setSizeAllowed(studentsPerClass);
         room1.setSizeAllowed(studentsPerClass);
-        GArun.initialPopulation(students,classes,population);
 
-    for(Room r : classes){
-        System.out.println(r.getName());
-        for (Student s: r.getStudentList()) {
-            System.out.println(s.getName());
+
+
+     /*   for(ArrayList<Room> r: population.getPopulation()){
+            for(Room rm : r){
+                System.out.println(rm.getName());
+                for(Student s : rm.getStudentList()){
+                  System.out.println(s.getName());
+                }
+            }
+        }*/
+        GArun.initialPopulation(students, classes, population);
+        Population childPop=population;
+        int generationCount=0;
+        int end;
+       do {
+            parents = GArun.selection(childPop);
+           // System.out.println(bestTwo.fst.getRoomCollection().get(0).getStudentList());
+         //   System.out.println(bestTwo.fst.getRoomCollection().get(1).getStudentList());
+           childPop = GArun.mating(parents);
+
+            childPop = GArun.mutation(childPop);
+            System.out.println(generationCount++);
+           end=GArun.terminate(childPop);
+        }while(end==-1);
+
+       for(Room rooms: population.getPopulation().get(end)){
+           System.out.println(rooms.getName());
+        for(Student winningStudents: rooms.getStudentList()){
+            System.out.println(winningStudents.getName());
         }
-    }
+       }
+
+
+
+
+
+
+
+      /* for(int i=0; i<100; i++) {
+           for (int j = 0; j < childPop.getPopulation().get(i).size(); j++) {
+               System.out.println(childPop.getPopulation().get(i).get(j));
+               System.out.println(childPop.getPopulation().get(i).get(j).getStudentList());
+           }
+
+       }*/
+
+
     }
 
 }

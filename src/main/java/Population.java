@@ -1,34 +1,47 @@
 import java.util.ArrayList;
 
 public class Population{
-    private float popScore;
+    private double popScore;
     private int popNumber;
-
-    private ArrayList<Room> classList;
+    private ArrayList<ArrayList<Room>> population=new ArrayList<ArrayList<Room>>();
 
     public void setPopNumber(int popNumber) {
+
         this.popNumber = popNumber;
+    }
+
+    public void increasePopNumber(){
+        this.popNumber++;
     }
 
     public int getPopNumber() {
         return this.popNumber;
     }
 
-    public void setPopScore(int score){
+    public void setPopScore(double score){
         this.popScore=score;
     }
 
-    public float getPopScore() {
+    public double getPopScore() {
         return popScore;
     }
 
 
-    public void setClassList(ArrayList<Room> classList) {
-        this.classList = classList;
+    public void setClassList(ArrayList<ArrayList<Room>> population) {
+        this.population = population;
     }
 
-    public void addClass(Room r){
-        classList.add(r);
+
+
+    public ArrayList<ArrayList<Room>> getPopulation(){
+        return population;
+    }
+
+    public void addClass(ArrayList<Room> r){
+        population.add(r);
 
     }
+
+
+
 }
