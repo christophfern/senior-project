@@ -1,18 +1,48 @@
 
 
+import javafx.util.Pair;
+
 import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
+          Population population=new Population();
+          Pair<ArrayList<Student>,ArrayList<Room>> firstGen=null;
+
            try {
-               ReadIn.readSheet();
+               firstGen=ReadIn.readSheet(population);
            }catch(Exception e){
 
            }
-      /*  ArrayList<Student> students = new ArrayList<Student>();
-        ArrayList<Room> classes = new ArrayList<Room>();
-        Population population = new Population();
+
+
+
+        ArrayList<Student> students = firstGen.getKey();
+        ArrayList<Room> classes = firstGen.getValue();
+
+        int studentsPerClass = students.size() / classes.size();
+
+        for(Room room : classes) {
+            room.setSizeAllowed(studentsPerClass);
+        }
+
+        //System.out.println(students.size());
+
+        System.out.println(population.getPopulation().size());
+        GArun.initialPopulation(students, classes, population);
+
+     //   System.out.println(population.getPopulation().get(0).get(0).getStudentList().size());
+        for(Room rm: population.getPopulation().get(0)) {
+     //       for (Room rm : r) {
+         //      System.out.println(rm.getName());
+                for (Student s : rm.getStudentList()) {
+                   System.out.println(s.getName());
+                }
+      //      }
+        }
+
+        /*Population population = new Population();
         ArrayList<RoomList> parents=new ArrayList<RoomList>();
 
 
@@ -125,7 +155,7 @@ public class Main {
             parents = GArun.selection(childPop);
            // System.out.println(bestTwo.fst.getRoomCollection().get(0).getStudentList());
          //   System.out.println(bestTwo.fst.getRoomCollection().get(1).getStudentList());
-           childPop = GArun.mating(parents);
+        //   childPop = GArun.mating(parents);
 
             childPop = GArun.mutation(childPop);
             System.out.println(generationCount++);

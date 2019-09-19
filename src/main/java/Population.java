@@ -39,7 +39,6 @@ public class Population{
 
     public void addClass(ArrayList<Room> r){
         population.add(r);
-
     }
 
 

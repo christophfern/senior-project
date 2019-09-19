@@ -3,8 +3,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 
+import javafx.util.Pair;
 import org.apache.poi.openxml4j.exceptions.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
@@ -48,7 +50,8 @@ public class ReadIn {
         }
     }*/
 
-        public static final String SAMPLE_XLSX_FILE_PATH = "Documents\\testbook.xlsx";
+       // public static final String SAMPLE_XLSX_FILE_PATH = "Documents\\testbook.xlsx";
+       public static final String SAMPLE_XLSX_FILE_PATH="Users/chrisfernandez/Documents/testbook.xls";
 
         public static void readIn() throws IOException, InvalidFormatException {
 
@@ -122,9 +125,14 @@ public class ReadIn {
         System.out.print("\t");
     }
 
-    public static void readSheet() {
+    public static Pair<ArrayList<Student>,ArrayList<Room>> readSheet(Population population) {
+        ArrayList<Student> studentList=new ArrayList<Student>();
+        ArrayList<Room> classesList=new ArrayList<Room>();
         try {
-            FileInputStream file = new FileInputStream(new File("C:\\Users\\Chris Fernandez\\Documents\\testbook.xlsx"));
+
+
+          //windows  FileInputStream file = new FileInputStream(new File("C:\\Users\\Chris Fernandez\\Documents\\testbook.xlsx"));
+            FileInputStream file = new FileInputStream(new File("/Users/chrisfernandez/Documents/testbook.xlsx"));
 
             //Create Workbook instance holding reference to .xlsx file
             XSSFWorkbook workbook = new XSSFWorkbook(file);
@@ -136,12 +144,23 @@ public class ReadIn {
 
             //Iterate through each rows one by one
             Iterator<Row> rowIterator = sheet.iterator();
+            int rowNum=0;
+            Student student=null;
+
             while (rowIterator.hasNext()) {
                 Row row = rowIterator.next();
                 //For each row, iterate through all the columns
                 Iterator<Cell> cellIterator = row.cellIterator();
 
+
+
+
+
+                int colNum=0;
+                student =new Student();
                 while (cellIterator.hasNext()) {
+
+
                     double x=0;
                     String y=null;
                     Cell cell = cellIterator.next();
@@ -152,7 +171,37 @@ public class ReadIn {
                       x  = cell.getNumericCellValue();
                             break;
                         case Cell.CELL_TYPE_STRING:
-                          y  =cell.getStringCellValue();
+                            if(rowNum < 1){
+                                Room room =new Room();
+                                room.setName(cell.getStringCellValue());
+
+                                classesList.add(room);
+                            }else if(rowNum==1){
+
+                            }else{
+
+
+                                switch (colNum){
+                                    case 0:
+                                        student.setName(cell.getStringCellValue());
+                                  //      System.out.println(cell.getStringCellValue());
+                                        break;
+
+                                    case 1:
+                                        student.setChoice1(cell.getStringCellValue());
+                                        break;
+                                    case 2:
+                                        student.setChoice2(cell.getStringCellValue());
+                                    case 3:
+                                        student.setChoice3(cell.getStringCellValue());
+                                        break;
+                                    default:
+                                        //do nothing
+                                }
+
+
+                            }
+                          y  = cell.getStringCellValue();
                             break;
 
                         default:
@@ -160,14 +209,30 @@ public class ReadIn {
 
                             break;
                     }
-                    System.out.println(x);
-                    System.out.println(y);
+
+                    population.addClass(classesList);
+
+                    colNum++;
+
                 }
-                System.out.println("");
+                rowNum++;
+
+                 //   System.out.println(studentList.size());
+               //     System.out.println(student.getName());
+                    studentList.add(student);
+
+
             }
+
             file.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        Pair<ArrayList<Student>,ArrayList<Room>> roomStudent=new Pair<ArrayList<Student>, ArrayList<Room>>(studentList,classesList);
+
+        return roomStudent;
+
+
     }
 }

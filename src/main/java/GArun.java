@@ -10,16 +10,15 @@ public class GArun {
         int numClass = classList.size();
         int randomClass;
         population.setPopNumber(1);
+        population.setClassList(new ArrayList<ArrayList<Room>>());
 
-
-        for (int j = 0; j < 1000; j++) {
+     //   for (int j = 0; j < 1000; j++) {
             ArrayList<Room> classes = new ArrayList<Room>();
 
 
             for (Room r : classList) {
-                //    System.out.println(r);
+                //   System.out.println(r);
                 Room newRoom = new Room(r);
-
                 classes.add(newRoom);
             }
 
@@ -56,16 +55,22 @@ public class GArun {
 
                 if (!classes.get(randomClass).isFull()) {
 
+                 //   System.out.println(student);
                     classes.get(randomClass).addStudent(student);
 
+
                 }
-
-
+              //  System.out.println(classes.get(0));
+             //   System.out.println(classes.get(0).getStudentList());
             }
-            // System.out.println(classes.get(0).getStudentList());
-            population.addClass(classes);
 
-        }
+
+            population.addClass(classes);
+           System.out.println(population.getPopulation().size());
+
+        //     population.getPopulation().size();
+
+    //    }
 
     }
 
@@ -125,28 +130,28 @@ public class GArun {
 
 
         for (int i = 0; i < 1000; i++) {
-            if (i < 35) {
+            if (i < 350) {
                 RoomList rl = new RoomList();
                 for (Room r : best.getRoomCollection()) {
                     Room copyRoom = new Room(r, true);
                     rl.getRoomCollection().add(copyRoom);
                 }
                 childPop.getPopulation().add(rl.getRoomCollection());
-            } else if(i<60){
+            } else if(i<600){
                 RoomList rl = new RoomList();
                 for (Room r : second.getRoomCollection()) {
                     Room copyRoom = new Room(r, true);
                     rl.getRoomCollection().add(copyRoom);
                 }
                 childPop.getPopulation().add(rl.getRoomCollection());
-            }else if(i<80){
+            }else if(i<800){
                 RoomList rl = new RoomList();
                 for (Room r : third.getRoomCollection()) {
                     Room copyRoom = new Room(r, true);
                     rl.getRoomCollection().add(copyRoom);
                 }
                 childPop.getPopulation().add(rl.getRoomCollection());
-            }else if(i<100){
+            }else if(i<1000){
                 RoomList rl = new RoomList();
                 for (Room r : fourth.getRoomCollection()) {
                     Room copyRoom = new Room(r, true);
