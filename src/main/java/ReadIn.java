@@ -195,6 +195,10 @@ public class ReadIn {
                                     case 3:
                                         student.setChoice3(cell.getStringCellValue());
                                         break;
+                                    case 4:
+                                        student.setChoice4(cell.getStringCellValue());
+                                        break;
+                                    case 5:
                                     default:
                                         //do nothing
                                 }

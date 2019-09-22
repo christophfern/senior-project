@@ -12,7 +12,7 @@ public class GArun {
         population.setPopNumber(1);
         population.setClassList(new ArrayList<ArrayList<Room>>());
 
-     //   for (int j = 0; j < 1000; j++) {
+        for (int j = 0; j < 100; j++) {
             ArrayList<Room> classes = new ArrayList<Room>();
 
 
@@ -55,165 +55,168 @@ public class GArun {
 
                 if (!classes.get(randomClass).isFull()) {
 
-                 //   System.out.println(student);
+                    //   System.out.println(student);
                     classes.get(randomClass).addStudent(student);
 
 
                 }
-              //  System.out.println(classes.get(0));
-             //   System.out.println(classes.get(0).getStudentList());
+                //  System.out.println(classes.get(0));
+                //   System.out.println(classes.get(0).getStudentList());
             }
 
 
             population.addClass(classes);
-           System.out.println(population.getPopulation().size());
+            //      System.out.println(population.getPopulation().size());
 
-        //     population.getPopulation().size();
-
-    //    }
-
-    }
-
-
-    public static ArrayList<RoomList> selection(Population population) {
-
-
-        RoomList bestRoomList = new RoomList();
-        RoomList secondBestRoomList = new RoomList();
-        RoomList thirdBestRoomList =new RoomList();
-        RoomList fourthBestRoomList=new RoomList();
-
-        double currPopScore = 0.0;
-        for (ArrayList<Room> currPop : population.getPopulation()) {
-            currPopScore = 0.0;
-
-            for (Room currRoom : currPop) {
-                currRoom.calculateScore();
-                currPopScore += currRoom.getScore();
-
-            }
-
-
-            if (currPopScore > bestRoomList.getScore()) {
-
-                bestRoomList.setRoomCollection(currPop);
-                bestRoomList.setScore(currPopScore);
-
-            } else if (currPopScore > secondBestRoomList.getScore()) {
-                secondBestRoomList.setRoomCollection(currPop);
-                secondBestRoomList.setScore(currPopScore);
-            }else if (currPopScore > thirdBestRoomList.getScore()){
-                thirdBestRoomList.setRoomCollection(currPop);
-                thirdBestRoomList.setScore(currPopScore);
-            }else if(currPopScore > fourthBestRoomList.getScore()){
-                fourthBestRoomList.setRoomCollection(currPop);
-                fourthBestRoomList.setScore(currPopScore);
-            }
+            //     population.getPopulation().size();
 
         }
-      ArrayList<RoomList> best= new ArrayList<RoomList>();
-        best.add(bestRoomList);
-        best.add(secondBestRoomList);
-        best.add(thirdBestRoomList);
-        best.add(fourthBestRoomList);
 
-        return best;
     }
 
 
-    public static Population mating(ArrayList<RoomList> parents) {
-        RoomList best = parents.get(0);
-        RoomList second = parents.get(1);
-        RoomList third = parents.get(2);
-        RoomList fourth = parents.get(3);
+
+
+    public static Population mating(Population parents) {
+
+
         Population childPop = new Population();
 
+        for (int i = 0; i < 100; i++) {
+            RoomList roomList = new RoomList();
+            int score = 0;
+            if (i < 75) {
+              //  System.out.println(best.getRoomCollection());
+                for (Room room : parents.getPopulation().get(parents.getBestIndex())) {
 
-        for (int i = 0; i < 1000; i++) {
-            if (i < 350) {
-                RoomList rl = new RoomList();
-                for (Room r : best.getRoomCollection()) {
-                    Room copyRoom = new Room(r, true);
-                    rl.getRoomCollection().add(copyRoom);
+                    Room copyRoom = new Room(room, true);
+                    copyRoom.setStudentList((ArrayList<Student>) room.getStudentList().clone());
+                    roomList.getRoomCollection().add(copyRoom);
+                    score += room.getScore();
+
                 }
-                childPop.getPopulation().add(rl.getRoomCollection());
-            } else if(i<600){
-                RoomList rl = new RoomList();
-                for (Room r : second.getRoomCollection()) {
-                    Room copyRoom = new Room(r, true);
-                    rl.getRoomCollection().add(copyRoom);
+
+                //      System.out.println(score + "first");
+            } else {
+              for (Room room : parents.getPopulation().get(parents.getSecondBestIndex())) {
+                  Room copyRoom = new Room(room, true);
+                  copyRoom.setStudentList((ArrayList<Student>) room.getStudentList().clone());
+                  roomList.getRoomCollection().add(copyRoom);
+                  score += room.getScore();
                 }
-                childPop.getPopulation().add(rl.getRoomCollection());
-            }else if(i<800){
-                RoomList rl = new RoomList();
-                for (Room r : third.getRoomCollection()) {
-                    Room copyRoom = new Room(r, true);
-                    rl.getRoomCollection().add(copyRoom);
-                }
-                childPop.getPopulation().add(rl.getRoomCollection());
-            }else if(i<1000){
-                RoomList rl = new RoomList();
-                for (Room r : fourth.getRoomCollection()) {
-                    Room copyRoom = new Room(r, true);
-                    rl.getRoomCollection().add(copyRoom);
-                }
-                childPop.getPopulation().add(rl.getRoomCollection());
+
             }
+            childPop.addClass(roomList.getRoomCollection());
+
         }
 
+
+        childPop.setBestScore(parents.getBestScore());
 
         return childPop;
     }
 
+    public static void selection(Population population) {
+
+        double curscore = population.getBestScore();
+
+        int index = 0;
+        for (ArrayList<Room> pop : population.getPopulation()) {
+            int bestscore = 0;
+            for (Room room : pop) {
+                room.calculateScore();
+                bestscore += room.getScore();
+            }
+
+            if (bestscore > curscore) {
+                curscore = bestscore;
+                if(curscore!=0) {
+                    population.setSecondBestIndex(population.getBestIndex());
+                    population.setSecondaryScore(curscore);
+                }
+                population.setBestIndex(index);
+                population.setBestScore(bestscore);
+             //   System.out.println(population.getBestScore());
+
+            }
+            index++;
+        }
+    }
+
 
     public static Population mutation(Population childPop) {
-        int percentMutation=15;
-
+        int percentMutation = 10;
+        Population mutatedChildren=new Population();
         Random random = new Random();
         int randNum;
         int randClass;
         int randStudent;
         int randStudent2;
-        for(ArrayList<Room> list : childPop.getPopulation()){
-          //  System.out.println(list.size());
-            for(int i=0; i<list.size(); i++){
-                randNum=random.nextInt(100);
 
-                if(randNum<percentMutation) {
+
+        for (ArrayList<Room> list : childPop.getPopulation()) {
+
+
+       ArrayList<Room> temp=new ArrayList<Room>();
+
+            for (int i = 0; i < list.size(); i++) {
+
+                randNum = random.nextInt(100);
+
+
+               if (randNum < percentMutation) {
+
                     do {
-                         randClass = random.nextInt(list.size());
-                    }while(randClass==i);
-                    randStudent=random.nextInt(list.get(i).getStudentList().size()-1);
-                    randStudent2=random.nextInt(list.get(randClass).getStudentList().size()-1);
-                    list.get(i).swapStudents(list.get(randClass), randStudent, randStudent2);
+                        randClass = random.nextInt(list.size());
+                    } while (randClass == i);
+                    randStudent = random.nextInt(list.get(i).getStudentList().size() - 1);
+                    randStudent2 = random.nextInt(list.get(randClass).getStudentList().size() - 1);
+                   swapStudents(list.get(i),list.get(randClass), randStudent, randStudent2);
+
                 }
-                }
+
+
             }
 
-        return childPop;
-    }
+            mutatedChildren.addClass(list);
+        }
 
+        return mutatedChildren;
+    }
 
 
     public static int terminate(Population population) {
-        int targetScore = 17;
+        double percentCorrect = 0.70;
+        double targetScore = population.getPopScore() * percentCorrect;
+        System.out.println(targetScore);
+        int bestScore = 0;
+        int index = 0;
 
-        for (int i = 0; i < population.getPopulation().size(); i++) {
-            int score = 0;
-
-            for (int j = 0; j < population.getPopulation().get(i).size(); j++) {
-                score += population.getPopulation().get(i).get(j).getScore();
+        for (ArrayList<Room> pop : population.getPopulation()) {
+            int bestscore = 0;
+            for (Room room : pop) {
+                room.calculateScore();
+         //       System.out.println(room.getScore());
+                bestscore += room.getScore();
             }
-
-            System.out.println(score);
-            if (score >= targetScore) {
-
-                return i;
+       //     System.out.println(bestscore);
+            if (bestscore > targetScore-5) {
+                return index;
             }
+            index++;
         }
-        return -1;
+
+    return -1;
     }
 
+    private static void swapStudents(Room room1, Room room2, int student1, int student2){
+
+            Student hold=new Student(room2.getStudentList().get(student2));
+            Student hold2=new Student(room1.getStudentList().get(student1));
+            room2.getStudentList().set(student2,hold2);
+            room1.getStudentList().set(student1,hold);
+
+    }
 }
 
 

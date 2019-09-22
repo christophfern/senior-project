@@ -18,10 +18,44 @@ public class Main {
 
 
 
-        ArrayList<Student> students = firstGen.getKey();
-        ArrayList<Room> classes = firstGen.getValue();
+        ArrayList<Student> studentsOrg = firstGen.getKey();
+        ArrayList<Room> classesWmcGill = firstGen.getValue();
+        ArrayList<Room> classes=new ArrayList<Room>();
+        ArrayList<Integer> indexToDelete=new ArrayList<Integer>();
+        ArrayList<Integer> mcGills=new ArrayList<Integer>();
+        ArrayList<Student> students=new ArrayList<Student>();
+
+
+       for(Room room : classesWmcGill){
+           if(!room.getName().equalsIgnoreCase("mcgill-dan") && !room.getName().equalsIgnoreCase("mcgill-nancy"))
+           classes.add(room);
+       }
+
+        int index=0;
+        for(Student student : studentsOrg){
+            if(student.getChoice1()==null || student.getChoice1().equals("")){
+             indexToDelete.add(index);
+
+            }
+            if(student.getMcGill()){
+                mcGills.add(index);
+            }
+            index++;
+        }
+
+        for(int i=0; i< studentsOrg.size(); i++){
+           if(!indexToDelete.contains(i)){
+               students.add(studentsOrg.get(i));
+           }
+
+        }
+    System.out.println(students.size());
 
         int studentsPerClass = students.size() / classes.size();
+        double maxScore=students.size()*5;
+
+        population.setPopScore(maxScore);
+
 
         for(Room room : classes) {
             room.setSizeAllowed(studentsPerClass);
@@ -29,18 +63,42 @@ public class Main {
 
         //System.out.println(students.size());
 
-        System.out.println(population.getPopulation().size());
+        Population parents=new Population();
         GArun.initialPopulation(students, classes, population);
 
-     //   System.out.println(population.getPopulation().get(0).get(0).getStudentList().size());
-        for(Room rm: population.getPopulation().get(0)) {
-     //       for (Room rm : r) {
-         //      System.out.println(rm.getName());
-                for (Student s : rm.getStudentList()) {
-                   System.out.println(s.getName());
-                }
-      //      }
-        }
+        Population childPop=population;
+        int generationCount=0;
+        int end=-1;
+    int curscore=0;
+    do {
+
+        System.out.println("----------------------");
+        GArun.selection(childPop);
+        System.out.println("GEN: " + generationCount++ +"  " + childPop.getBestScore());
+        childPop = GArun.mating(childPop);
+        childPop=GArun.mutation(childPop);
+
+        childPop.setPopScore(maxScore);
+
+        end=GArun.terminate(childPop);
+      //  System.out.println(childPop.getBestScore());
+        System.out.println("----------------------");
+
+
+
+    }while(end==-1);
+ ///       System.out.println(childPop.getPopulation().get(0).get(0).getScore());
+
+        for(Room room: childPop.getPopulation().get(end)) {
+
+               System.out.println(room.getName());
+               System.out.println(room.getScore());
+               for (Student s : room.getStudentList()) {
+                   System.out.println(s.getName() + "   " + s.getChoice1()+ "   "+s.getChoice2() +"    "+ s.getChoice3() +" " + s.getChoice4()+ " " +s.getChoice5());
+
+
+            }
+       }
 
         /*Population population = new Population();
         ArrayList<RoomList> parents=new ArrayList<RoomList>();

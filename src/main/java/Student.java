@@ -13,7 +13,24 @@ public class Student{
     private boolean isAthlete;
 
 
+    Student(){
 
+    }
+
+    Student(Student s){
+        this.isAthlete=s.getAthlete();
+        this.choice1=s.getChoice1();
+        this.choice2=s.getChoice2();
+        this.choice3=s.getChoice3();
+        this.choice4=s.getChoice4();
+        this.choice5=s.getChoice5();
+        this.choice6=s.getChoice6();
+        this.isConditionalAdmit=s.getConditionalAdmit();
+        this.gender=s.getGender();
+        this.name=s.getName();
+        this.isMcGill=s.getMcGill();
+
+    }
         public void setName(String n){
             this.name=n;
         }
