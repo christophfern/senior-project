@@ -79,6 +79,7 @@ public class Room{
         int numberInfifth =0;
         int conditionalInFirst=0;
         int noCorrectChoice=0;
+        boolean conditional=false;
 
             for(Student curr: studentList){
                 noCorrectChoice=0;
@@ -87,6 +88,10 @@ public class Room{
                 boolean three=false;
                 boolean four=false;
                 boolean five=false;
+
+                if(curr.getConditionalAdmit()){
+                    conditional=true;
+                }
                 if(this.name.equalsIgnoreCase(curr.getChoice1())){
                     numberInFirst++;
                     one=true;
@@ -106,8 +111,14 @@ public class Room{
                 }
 
                if(!(one || two || three || four || five)){
-                   noCorrectChoice=1;
-               }
+                    noCorrectChoice=1;
+                 //  System.out.println("HERE 1");
+                }
+
+                if(!(one || two || three || four || five) && conditional){
+                    noCorrectChoice=7;
+                  //  System.out.println("HERE 2");
+                }
             }
         this.score=5*numberInFirst+4*numberInSecond+3*numberInthird+numberInfourth+numberInfifth-(4*noCorrectChoice);
 

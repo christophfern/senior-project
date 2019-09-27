@@ -88,7 +88,6 @@ public class GArun {
             if (i < 75) {
               //  System.out.println(best.getRoomCollection());
                 for (Room room : parents.getPopulation().get(parents.getBestIndex())) {
-
                     Room copyRoom = new Room(room, true);
                     copyRoom.setStudentList((ArrayList<Student>) room.getStudentList().clone());
                     roomList.getRoomCollection().add(copyRoom);
@@ -116,7 +115,7 @@ public class GArun {
         return childPop;
     }
 
-    public static void selection(Population population) {
+    public static boolean selection(Population population) {
 
         double curscore = population.getBestScore();
 
@@ -141,6 +140,10 @@ public class GArun {
             }
             index++;
         }
+        if(population.getBestScore()<0){
+            return false;
+        }
+        return true;
     }
 
 
@@ -171,8 +174,7 @@ public class GArun {
                     } while (randClass == i);
                     randStudent = random.nextInt(list.get(i).getStudentList().size() - 1);
                     randStudent2 = random.nextInt(list.get(randClass).getStudentList().size() - 1);
-                   swapStudents(list.get(i),list.get(randClass), randStudent, randStudent2);
-
+                    swapStudents(list.get(i),list.get(randClass), randStudent, randStudent2);
                 }
 
 
@@ -187,7 +189,8 @@ public class GArun {
 
     public static int terminate(Population population) {
         double percentCorrect = 0.70;
-        double targetScore = population.getPopScore() * percentCorrect;
+        double targetScore = 840;
+                //population.getPopScore() * percentCorrect;
         System.out.println(targetScore);
         int bestScore = 0;
         int index = 0;

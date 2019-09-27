@@ -199,6 +199,14 @@ public class ReadIn {
                                         student.setChoice4(cell.getStringCellValue());
                                         break;
                                     case 5:
+                                        student.setChoice5(cell.getStringCellValue());
+                                        break;
+                                    case 6:
+                                        if(cell.getStringCellValue().equalsIgnoreCase("conditional")){
+                                            student.setConditionalAdmit(true);
+                                        }else{
+                                            student.setConditionalAdmit(false);
+                                        }
                                     default:
                                         //do nothing
                                 }

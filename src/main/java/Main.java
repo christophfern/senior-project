@@ -64,17 +64,27 @@ public class Main {
         //System.out.println(students.size());
 
         Population parents=new Population();
-        GArun.initialPopulation(students, classes, population);
+        Population childPop = null;
 
-        Population childPop=population;
+
         int generationCount=0;
         int end=-1;
     int curscore=0;
     do {
+        if(generationCount==0){
+            GArun.initialPopulation(students, classes, population);
+            childPop=population;
+        }
 
         System.out.println("----------------------");
-        GArun.selection(childPop);
-        System.out.println("GEN: " + generationCount++ +"  " + childPop.getBestScore());
+        System.out.println("GEN: " + generationCount++);
+
+        if(!GArun.selection(childPop)) {
+            generationCount=0;
+        }
+
+        System.out.println("BEST "+childPop.getBestScore());
+
         childPop = GArun.mating(childPop);
         childPop=GArun.mutation(childPop);
 
@@ -86,7 +96,10 @@ public class Main {
 
 
 
-    }while(end==-1);
+    }while(end==-1 && generationCount<10000);
+    if(generationCount>9999){
+        end=childPop.getBestIndex();
+    }
  ///       System.out.println(childPop.getPopulation().get(0).get(0).getScore());
 
         for(Room room: childPop.getPopulation().get(end)) {
@@ -94,8 +107,9 @@ public class Main {
                System.out.println(room.getName());
                System.out.println(room.getScore());
                for (Student s : room.getStudentList()) {
-                   System.out.println(s.getName() + "   " + s.getChoice1()+ "   "+s.getChoice2() +"    "+ s.getChoice3() +" " + s.getChoice4()+ " " +s.getChoice5());
-
+        //        if(s.getConditionalAdmit()) {
+                    System.out.println(s.getName() + "   " + s.getChoice1() + "   " + s.getChoice2() + "    " + s.getChoice3() + " " + s.getChoice4() + " " + s.getChoice5() + "  " + s.getConditionalAdmit());
+          //      }
 
             }
        }
