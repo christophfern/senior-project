@@ -79,6 +79,9 @@ public class Room{
         int numberInfifth =0;
         int conditionalInFirst=0;
         int noCorrectChoice=0;
+        int mGenderScore=0;
+        int fGenderScore=0;
+
         boolean conditional=false;
 
             for(Student curr: studentList){
@@ -119,8 +122,20 @@ public class Room{
                     noCorrectChoice=7;
                   //  System.out.println("HERE 2");
                 }
+           //     System.out.println(curr.getGender());
+                if("m".equalsIgnoreCase(curr.getGender())){
+                    mGenderScore++;
+                }else{
+                    fGenderScore++;
+                }
+
+
             }
         this.score=5*numberInFirst+4*numberInSecond+3*numberInthird+numberInfourth+numberInfifth-(4*noCorrectChoice);
+
+            if(fGenderScore>this.studentList.size()*.70 || mGenderScore>this.getStudentList().size()*.70){
+                this.score=0;
+           }
 
 
         }

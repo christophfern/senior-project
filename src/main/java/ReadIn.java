@@ -164,68 +164,76 @@ public class ReadIn {
                     double x=0;
                     String y=null;
                     Cell cell = cellIterator.next();
-                    //If it is formula cell, it will be evaluated otherwise no change will happen
-                    switch (evaluator.evaluateInCell(cell).getCellType()) {
 
-                        case Cell.CELL_TYPE_NUMERIC:
-                      x  = cell.getNumericCellValue();
-                            break;
-                        case Cell.CELL_TYPE_STRING:
                             if(rowNum < 1){
                                 Room room =new Room();
                                 room.setName(cell.getStringCellValue());
-
                                 classesList.add(room);
                             }else if(rowNum==1){
 
                             }else{
 
+                            for(int i=0; i<8; i++) {
+                                cell=row.getCell(i);
+                                if(cell!=null) {
+                                    switch (i) {
+                                        case 0:
+                                            student.setName(cell.getStringCellValue());
+                                            //      System.out.println(cell.getStringCellValue());
+                                            break;
 
-                                switch (colNum){
-                                    case 0:
-                                        student.setName(cell.getStringCellValue());
-                                  //      System.out.println(cell.getStringCellValue());
-                                        break;
+                                        case 1:
+                                            student.setChoice1(cell.getStringCellValue());
+                                            break;
+                                        case 2:
+                                            student.setChoice2(cell.getStringCellValue());
+                                        case 3:
+                                            student.setChoice3(cell.getStringCellValue());
+                                            break;
+                                        case 4:
+                                            student.setChoice4(cell.getStringCellValue());
+                                            break;
+                                        case 5:
+                                            student.setChoice5(cell.getStringCellValue());
+                                            break;
+                                        case 6:
+                                            if (cell.getStringCellValue().equalsIgnoreCase("conditional")) {
+                                                student.setConditionalAdmit(true);
+                                            } else {
+                                                student.setConditionalAdmit(false);
+                                            }
+                                            break;
+                                        case 7:
+                                            if (cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+                                                student.setGender("other");
+                                                System.out.println("empty");
+                                            } else {
+                                                student.setGender(cell.getStringCellValue());
+                                                //  System.out.println(cell.getStringCellValue());
+                                            }
 
-                                    case 1:
-                                        student.setChoice1(cell.getStringCellValue());
-                                        break;
-                                    case 2:
-                                        student.setChoice2(cell.getStringCellValue());
-                                    case 3:
-                                        student.setChoice3(cell.getStringCellValue());
-                                        break;
-                                    case 4:
-                                        student.setChoice4(cell.getStringCellValue());
-                                        break;
-                                    case 5:
-                                        student.setChoice5(cell.getStringCellValue());
-                                        break;
-                                    case 6:
-                                        if(cell.getStringCellValue().equalsIgnoreCase("conditional")){
-                                            student.setConditionalAdmit(true);
-                                        }else{
-                                            student.setConditionalAdmit(false);
-                                        }
-                                    default:
-                                        //do nothing
+                                            break;
+                                        default:
+                                            //do nothing
+                                    }
+
                                 }
-
-
                             }
-                          y  = cell.getStringCellValue();
-                            break;
+                            }
+             //             y  = cell.getStringCellValue();
+            //                break;
 
-                        default:
+
+              //        default:
                         //do nothing
 
-                            break;
-                    }
+         //                   break;
+        //            }
 
                     population.addClass(classesList);
-
                     colNum++;
 
+                    System.out.println(colNum);
                 }
                 rowNum++;
 

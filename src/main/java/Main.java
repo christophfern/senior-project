@@ -34,8 +34,7 @@ public class Main {
         int index=0;
         for(Student student : studentsOrg){
             if(student.getChoice1()==null || student.getChoice1().equals("")){
-             indexToDelete.add(index);
-
+      //       indexToDelete.add(index);
             }
             if(student.getMcGill()){
                 mcGills.add(index);
