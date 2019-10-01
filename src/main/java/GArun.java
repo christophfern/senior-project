@@ -124,6 +124,9 @@ public class GArun {
             int bestscore = 0;
             for (Room room : pop) {
                 room.calculateScore();
+                if(room.getScore()==0){
+                    break;
+                }
                 bestscore += room.getScore();
             }
 
@@ -140,7 +143,7 @@ public class GArun {
             }
             index++;
         }
-        if(population.getBestScore()<0){
+        if(population.getBestScore()<-20){
             return false;
         }
         return true;
@@ -189,7 +192,7 @@ public class GArun {
 
     public static int terminate(Population population) {
         double percentCorrect = 0.70;
-        double targetScore = 840;
+        double targetScore = 3000;
                 //population.getPopScore() * percentCorrect;
         System.out.println(targetScore);
         int bestScore = 0;
@@ -199,11 +202,16 @@ public class GArun {
             int bestscore = 0;
             for (Room room : pop) {
                 room.calculateScore();
-         //       System.out.println(room.getScore());
+
+                if(room.getScore()==0){
+                    return -1;
+                }
                 bestscore += room.getScore();
+
             }
-       //     System.out.println(bestscore);
-            if (bestscore > targetScore-5) {
+
+            if (bestscore > targetScore) {
+                population.setBestIndex(index);
                 return index;
             }
             index++;

@@ -81,6 +81,21 @@ public class Room{
         int noCorrectChoice=0;
         int mGenderScore=0;
         int fGenderScore=0;
+        int mSoccerCount=0;
+        int fSoccerCount=0;
+        int footballCount=0;
+        int baseballCount=0;
+        int softballCount=0;
+        int mGolfCount=0;
+        int fGolfCount=0;
+        int mBasketballCount=0;
+        int fBasketballCount=0;
+        int mCrossCountry=0;
+        int fCrossCountry=0;
+        int popGenderScore=0;
+        int popSportScore=0;
+        int conditionalIncorrect=0;
+
 
         boolean conditional=false;
 
@@ -92,6 +107,43 @@ public class Room{
                 boolean four=false;
                 boolean five=false;
 
+                switch(curr.getSportPlayed().toLowerCase()){
+
+                    case "football":
+                        footballCount++;
+                        break;
+                    case "soccer":
+                        if(curr.getGender().equalsIgnoreCase("m")){
+                            mSoccerCount++;
+                        }else if(curr.getGender().equalsIgnoreCase("f")){
+                            fSoccerCount++;
+                        }
+                        break;
+                    case "basketball":
+                        if(curr.getGender().equalsIgnoreCase("m")){
+                            mBasketballCount++;
+                        }else if(curr.getGender().equalsIgnoreCase("f")){
+                            fBasketballCount++;
+                        }
+                        break;
+                    case "golf":
+                        if(curr.getGender().equalsIgnoreCase("m")){
+                            mGolfCount++;
+                        }else if(curr.getGender().equalsIgnoreCase("f")){
+                            fGolfCount++;
+                        }
+                        break;
+                    case "cross country":
+                        if(curr.getGender().equalsIgnoreCase("m")){
+                            mCrossCountry++;
+                        }else if(curr.getGender().equalsIgnoreCase("f")){
+                            fCrossCountry++;
+                        }
+                     default:
+                        //nothing
+                        break;
+
+                }
                 if(curr.getConditionalAdmit()){
                     conditional=true;
                 }
@@ -113,16 +165,16 @@ public class Room{
                     five=true;
                 }
 
-               if(!(one || two || three || four || five)){
-                    noCorrectChoice=1;
-                 //  System.out.println("HERE 1");
+                if(!(one || two || three || four || five)){
+                    noCorrectChoice++;
+                    //  System.out.println("HERE 1");
                 }
 
-                if(!(one || two || three || four || five) && conditional){
-                    noCorrectChoice=7;
-                  //  System.out.println("HERE 2");
+                if((one || two || three || four || five) && conditional){
+                    conditionalIncorrect++;
+                    //  System.out.println("HERE 2");
                 }
-           //     System.out.println(curr.getGender());
+                //     System.out.println(curr.getGender());
                 if("m".equalsIgnoreCase(curr.getGender())){
                     mGenderScore++;
                 }else{
@@ -130,13 +182,27 @@ public class Room{
                 }
 
 
+
             }
-        this.score=5*numberInFirst+4*numberInSecond+3*numberInthird+numberInfourth+numberInfifth-(4*noCorrectChoice);
+
+            this.score=5*numberInFirst+4*numberInSecond+3*numberInthird+numberInfourth+numberInfifth-(15*noCorrectChoice)+(10*conditionalIncorrect);
 
             if(fGenderScore>this.studentList.size()*.70 || mGenderScore>this.getStudentList().size()*.70){
-                this.score=0;
-           }
 
+                this.score=0;
+           }else if(fGenderScore>this.studentList.size()*.60 || mGenderScore>this.getStudentList().size()*.60){
+                popGenderScore++;
+            }
+
+            if(fSoccerCount>10||mBasketballCount>10||mCrossCountry>10||mGolfCount>10||mSoccerCount>10||fCrossCountry>10||fBasketballCount>10||
+                    fGolfCount>5||footballCount>10){
+                this.score=0;
+            }else if(fSoccerCount>4||mBasketballCount>4||mCrossCountry>4||mGolfCount>4|mSoccerCount>4||fCrossCountry>4||fBasketballCount>4||
+                    fGolfCount>4||footballCount>4){
+                popSportScore++;
+            }
+
+            this.score=this.score-popGenderScore-popSportScore;
 
         }
 

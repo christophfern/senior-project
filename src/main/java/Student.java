@@ -1,16 +1,16 @@
 public class Student{
 
-    private String name;
+    private String name="";
     private boolean isMcGill;
     private boolean isConditionalAdmit;
-    private String choice1;
-    private String choice2;
-    private String choice3;
-    private String choice4;
-    private String choice5;
-    private String choice6;
-    private String gender;
-    private boolean isAthlete;
+    private String choice1="";
+    private String choice2="";
+    private String choice3="";
+    private String choice4="";
+    private String choice5="";
+    private String choice6="";
+    private String gender="";
+    private String sportPlayed="";
 
 
     Student(){
@@ -18,7 +18,7 @@ public class Student{
     }
 
     Student(Student s){
-        this.isAthlete=s.getAthlete();
+        this.sportPlayed=s.getSportPlayed();
         this.choice1=s.getChoice1();
         this.choice2=s.getChoice2();
         this.choice3=s.getChoice3();
@@ -111,11 +111,11 @@ public class Student{
             return this.gender;
         }
 
-        public void setAthlete(boolean tf){
-            this.isAthlete=tf;
+        public void setSportPlayed(String tf){
+            this.sportPlayed=tf;
         }
 
-        public boolean getAthlete(){
-            return this.isAthlete;
+        public String getSportPlayed(){
+            return this.sportPlayed;
         }
 }

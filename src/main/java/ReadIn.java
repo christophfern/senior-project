@@ -154,8 +154,6 @@ public class ReadIn {
 
 
 
-
-
                 int colNum=0;
                 student =new Student();
                 while (cellIterator.hasNext()) {
@@ -173,7 +171,7 @@ public class ReadIn {
 
                             }else{
 
-                            for(int i=0; i<8; i++) {
+                            for(int i=0; i<9; i++) {
                                 cell=row.getCell(i);
                                 if(cell!=null) {
                                     switch (i) {
@@ -204,7 +202,7 @@ public class ReadIn {
                                             }
                                             break;
                                         case 7:
-                                            if (cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+                                            if (cell==null) {
                                                 student.setGender("other");
                                                 System.out.println("empty");
                                             } else {
@@ -213,8 +211,14 @@ public class ReadIn {
                                             }
 
                                             break;
+                                        case 8:
+                                            if(cell==null){
+                                                student.setSportPlayed("none");
+                                            }else{
+                                                student.setSportPlayed(cell.getStringCellValue());
+                                            }
                                         default:
-                                            //do nothing
+
                                     }
 
                                 }
@@ -233,7 +237,7 @@ public class ReadIn {
                     population.addClass(classesList);
                     colNum++;
 
-                    System.out.println(colNum);
+          //          System.out.println(colNum);
                 }
                 rowNum++;
 
