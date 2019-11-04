@@ -18,7 +18,7 @@ public class Main {
         String number;
         boolean continueToProcess = false;
         boolean isUp=false;
-       do{
+
             Window window = new Window();
             number = window.getNumber();
             path = window.getPath();
@@ -68,7 +68,6 @@ public class Main {
             window.closeWindow();
         }*/
 
-        }while(!continueToProcess);
     }
 }
 
