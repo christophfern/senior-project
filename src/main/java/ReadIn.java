@@ -14,9 +14,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
-import java.io.File;
-import java.io.IOException;
-import java.util.Iterator;
+
 
 public class ReadIn {
     /*public static void main(String[] args) {
@@ -125,14 +123,15 @@ public class ReadIn {
         System.out.print("\t");
     }
 
-    public static Pair<ArrayList<Student>,ArrayList<Room>> readSheet(Population population) {
+    public static Pair<ArrayList<Student>,ArrayList<Room>> readSheet(Population population,String path) {
         ArrayList<Student> studentList=new ArrayList<Student>();
         ArrayList<Room> classesList=new ArrayList<Room>();
         try {
 
 
           //windows  FileInputStream file = new FileInputStream(new File("C:\\Users\\Chris Fernandez\\Documents\\testbook.xlsx"));
-            FileInputStream file = new FileInputStream(new File("/Users/chrisfernandez/Documents/testbook.xlsx"));
+//            FileInputStream file = new FileInputStream(new File("/Users/chrisfernandez/Documents/testbook.xlsx"));
+            FileInputStream file = new FileInputStream(new File(path));
 
             //Create Workbook instance holding reference to .xlsx file
             XSSFWorkbook workbook = new XSSFWorkbook(file);
@@ -169,60 +168,105 @@ public class ReadIn {
                                 classesList.add(room);
                             }else if(rowNum==1){
 
-                            }else{
+                            }else {
 
-                            for(int i=0; i<9; i++) {
-                                cell=row.getCell(i);
-                                if(cell!=null) {
-                                    switch (i) {
-                                        case 0:
-                                            student.setName(cell.getStringCellValue());
-                                            //      System.out.println(cell.getStringCellValue());
-                                            break;
+                                for (int i = 0; i < 11; i++) {
+                                    cell = row.getCell(i);
+                                //    System.out.println(i);
+                                    if (cell != null) {
+                                        switch (i) {
+                                            case 0:
+                                                student.setName(cell.getStringCellValue());
+                                                //      System.out.println(cell.getStringCellValue());
+                                                break;
 
-                                        case 1:
-                                            student.setChoice1(cell.getStringCellValue());
-                                            break;
-                                        case 2:
-                                            student.setChoice2(cell.getStringCellValue());
-                                        case 3:
-                                            student.setChoice3(cell.getStringCellValue());
-                                            break;
-                                        case 4:
-                                            student.setChoice4(cell.getStringCellValue());
-                                            break;
-                                        case 5:
-                                            student.setChoice5(cell.getStringCellValue());
-                                            break;
-                                        case 6:
-                                            if (cell.getStringCellValue().equalsIgnoreCase("conditional")) {
-                                                student.setConditionalAdmit(true);
-                                            } else {
-                                                student.setConditionalAdmit(false);
-                                            }
-                                            break;
-                                        case 7:
-                                            if (cell==null) {
-                                                student.setGender("other");
-                                                System.out.println("empty");
-                                            } else {
-                                                student.setGender(cell.getStringCellValue());
-                                                //  System.out.println(cell.getStringCellValue());
-                                            }
+                                            case 1:
+                                                student.setChoice1(cell.getStringCellValue());
+                                                break;
+                                            case 2:
+                                                student.setChoice2(cell.getStringCellValue());
+                                            case 3:
+                                                student.setChoice3(cell.getStringCellValue());
+                                                break;
+                                            case 4:
+                                                student.setChoice4(cell.getStringCellValue());
+                                                break;
+                                            case 5:
+                                                student.setChoice5(cell.getStringCellValue());
+                                                break;
+                                            case 6:
+                                                if (cell.getStringCellValue().equalsIgnoreCase("conditional")) {
+                                                    student.setConditionalAdmit(true);
+                                                } else {
+                                                    student.setConditionalAdmit(false);
+                                                }
+                                                break;
+                                            case 7:
+                                                if (cell == null) {
+                                                    student.setGender("other");
+                                                    System.out.println("empty");
+                                                } else {
+                                                    student.setGender(cell.getStringCellValue());
+                                                    //  System.out.println(cell.getStringCellValue());
+                                                }
 
-                                            break;
-                                        case 8:
-                                            if(cell==null){
-                                                student.setSportPlayed("none");
-                                            }else{
-                                                student.setSportPlayed(cell.getStringCellValue());
-                                            }
-                                        default:
+                                                break;
+                                            case 8:
+                                                if (cell == null) {
+                                                    student.setSportPlayed("none");
+                                                } else {
+                                                    if (cell.getStringCellValue().toLowerCase().contains("soccer")) {
+                                                        student.setSportPlayed("soccer");
+                                                    } else if (cell.getStringCellValue().toLowerCase().contains("football")) {
+                                                        student.setSportPlayed("football");
+                                                    } else if (cell.getStringCellValue().toLowerCase().contains("basketball")) {
+                                                        student.setSportPlayed("basketball");
+                                                    } else if (cell.getStringCellValue().toLowerCase().contains("softball")) {
+                                                        student.setSportPlayed("softball");
+                                                    } else if (cell.getStringCellValue().toLowerCase().contains("baseball")) {
+                                                        student.setSportPlayed("baseball");
+                                                    } else if (cell.getStringCellValue().toLowerCase().contains("cross country")) {
+                                                        student.setSportPlayed("cross country");
+                                                    } else if (cell.getStringCellValue().toLowerCase().contains("cheerleading")) {
+                                                        student.setSportPlayed("cheerleading");
+                                                    } else if (cell.getStringCellValue().toLowerCase().contains("golf")) {
+                                                        student.setSportPlayed("golf");
+                                                    } else if (cell.getStringCellValue().toLowerCase().contains("tennis")) {
+                                                        student.setSportPlayed("tennis");
+                                                    } else if (cell.getStringCellValue().toLowerCase().contains("trainer")) {
+                                                        student.setSportPlayed("trainer");
+                                                    } else {
+                                                        student.setSportPlayed("none");
+                                                    }
+                                                }
+
+                                                break;
+                                            case 9:
+                                                System.out.println("LKJASHDLKJASHD");
+                                                if (cell == null) {
+
+                                                } else {
+                                                    System.out.println();
+                                                    student.setRace(cell.getStringCellValue());
+                                                }
+                                                break;
+                                            case 10:
+                                                if (cell == null) {
+                                                    student.setIsInternational(false);
+                                                } else {
+                                                    if (cell.getStringCellValue().length() == 2) {
+                                                        student.setIsInternational(false);
+                                                    } else {
+                                                        student.setIsInternational(true);
+                                                    }
+                                                }
+                                                break;
+                                            default:
+
+                                        }
 
                                     }
-
                                 }
-                            }
                             }
              //             y  = cell.getStringCellValue();
             //                break;

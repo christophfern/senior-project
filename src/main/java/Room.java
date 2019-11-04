@@ -95,6 +95,8 @@ public class Room{
         int popGenderScore=0;
         int popSportScore=0;
         int conditionalIncorrect=0;
+        int whiteCount=0;
+        int internationalCount=0;
 
 
         boolean conditional=false;
@@ -107,42 +109,34 @@ public class Room{
                 boolean four=false;
                 boolean five=false;
 
-                switch(curr.getSportPlayed().toLowerCase()){
+                if ("football".equals(curr.getSportPlayed().toLowerCase())) {
+                    footballCount++;
+                } else if ("soccer".equals(curr.getSportPlayed().toLowerCase())) {
+                    if (curr.getGender().equalsIgnoreCase("m")) {
+                        mSoccerCount++;
+                    } else if (curr.getGender().equalsIgnoreCase("f")) {
+                        fSoccerCount++;
+                    }
+                } else if ("basketball".equals(curr.getSportPlayed().toLowerCase())) {
+                    if (curr.getGender().equalsIgnoreCase("m")) {
+                        mBasketballCount++;
+                    } else if (curr.getGender().equalsIgnoreCase("f")) {
+                        fBasketballCount++;
+                    }
+                } else if ("golf".equals(curr.getSportPlayed().toLowerCase())) {
+                    if (curr.getGender().equalsIgnoreCase("m")) {
+                        mGolfCount++;
+                    } else if (curr.getGender().equalsIgnoreCase("f")) {
+                        fGolfCount++;
+                    }
+                } else if ("cross country".equals(curr.getSportPlayed().toLowerCase())) {
+                    if (curr.getGender().equalsIgnoreCase("m")) {
+                        mCrossCountry++;
+                    } else if (curr.getGender().equalsIgnoreCase("f")) {
+                        fCrossCountry++;
+                    }
 
-                    case "football":
-                        footballCount++;
-                        break;
-                    case "soccer":
-                        if(curr.getGender().equalsIgnoreCase("m")){
-                            mSoccerCount++;
-                        }else if(curr.getGender().equalsIgnoreCase("f")){
-                            fSoccerCount++;
-                        }
-                        break;
-                    case "basketball":
-                        if(curr.getGender().equalsIgnoreCase("m")){
-                            mBasketballCount++;
-                        }else if(curr.getGender().equalsIgnoreCase("f")){
-                            fBasketballCount++;
-                        }
-                        break;
-                    case "golf":
-                        if(curr.getGender().equalsIgnoreCase("m")){
-                            mGolfCount++;
-                        }else if(curr.getGender().equalsIgnoreCase("f")){
-                            fGolfCount++;
-                        }
-                        break;
-                    case "cross country":
-                        if(curr.getGender().equalsIgnoreCase("m")){
-                            mCrossCountry++;
-                        }else if(curr.getGender().equalsIgnoreCase("f")){
-                            fCrossCountry++;
-                        }
-                     default:
-                        //nothing
-                        break;
-
+                    //nothing
                 }
                 if(curr.getConditionalAdmit()){
                     conditional=true;
@@ -157,10 +151,10 @@ public class Room{
                 }else if(this.name.equalsIgnoreCase(curr.getChoice3())){
                     numberInthird++;
                     three=true;
-                }else if(this.name.equalsIgnoreCase(curr.getChoice3())){
+                }else if(this.name.equalsIgnoreCase(curr.getChoice4())){
                     numberInfourth++;
                     four=true;
-                }else if(this.name.equalsIgnoreCase(curr.getChoice3())) {
+                }else if(this.name.equalsIgnoreCase(curr.getChoice5())) {
                     numberInfifth++;
                     five=true;
                 }
@@ -168,6 +162,12 @@ public class Room{
                 if(!(one || two || three || four || five)){
                     noCorrectChoice++;
                     //  System.out.println("HERE 1");
+                }
+                if(curr.getIsInternational()){
+                    internationalCount++;
+                }
+                if(curr.getRace().equalsIgnoreCase("white")){
+                    whiteCount++;
                 }
 
                 if((one || two || three || four || five) && conditional){
@@ -185,13 +185,20 @@ public class Room{
 
             }
 
-            this.score=5*numberInFirst+4*numberInSecond+3*numberInthird+numberInfourth+numberInfifth-(15*noCorrectChoice)+(10*conditionalIncorrect);
+            this.score=6*numberInFirst+5*numberInSecond+4*numberInthird+3*numberInfourth+3*numberInfifth-(15*noCorrectChoice)+(10*conditionalIncorrect);
 
             if(fGenderScore>this.studentList.size()*.70 || mGenderScore>this.getStudentList().size()*.70){
 
                 this.score=0;
            }else if(fGenderScore>this.studentList.size()*.60 || mGenderScore>this.getStudentList().size()*.60){
                 popGenderScore++;
+            }
+            if(whiteCount>=this.getStudentList().size()-2){
+                this.score=0;
+            }
+
+            if(internationalCount==1){
+                this.score=0;
             }
 
             if(fSoccerCount>10||mBasketballCount>10||mCrossCountry>10||mGolfCount>10||mSoccerCount>10||fCrossCountry>10||fBasketballCount>10||

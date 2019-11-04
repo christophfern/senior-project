@@ -11,6 +11,8 @@ public class Student{
     private String choice6="";
     private String gender="";
     private String sportPlayed="";
+    private String race="";
+    private boolean isInternational=false;
 
 
     Student(){
@@ -28,6 +30,8 @@ public class Student{
         this.isConditionalAdmit=s.getConditionalAdmit();
         this.gender=s.getGender();
         this.name=s.getName();
+        this.race=s.getRace();
+        this.isInternational=s.getIsInternational();
         this.isMcGill=s.getMcGill();
 
     }
@@ -118,4 +122,22 @@ public class Student{
         public String getSportPlayed(){
             return this.sportPlayed;
         }
+
+        public String getRace(){
+            return this.race;
+        }
+
+        public void setRace(String s){
+            this.race=s;
+        }
+
+        public void setIsInternational(boolean s){
+            this.isInternational=s;
+        }
+
+        public boolean getIsInternational(){
+            return this.isInternational;
+        }
+
+
 }

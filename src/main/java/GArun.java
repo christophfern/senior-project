@@ -85,7 +85,7 @@ public class GArun {
         for (int i = 0; i < 100; i++) {
             RoomList roomList = new RoomList();
             int score = 0;
-            if (i < 75) {
+            if (i <=50) {
               //  System.out.println(best.getRoomCollection());
                 for (Room room : parents.getPopulation().get(parents.getBestIndex())) {
                     Room copyRoom = new Room(room, true);
@@ -96,7 +96,7 @@ public class GArun {
                 }
 
                 //      System.out.println(score + "first");
-            } else {
+            } else if(i<=80){
               for (Room room : parents.getPopulation().get(parents.getSecondBestIndex())) {
                   Room copyRoom = new Room(room, true);
                   copyRoom.setStudentList((ArrayList<Student>) room.getStudentList().clone());
@@ -104,6 +104,13 @@ public class GArun {
                   score += room.getScore();
                 }
 
+            }else{
+                for (Room room : parents.getPopulation().get(parents.getThirdBestIndex())) {
+                    Room copyRoom = new Room(room, true);
+                    copyRoom.setStudentList((ArrayList<Student>) room.getStudentList().clone());
+                    roomList.getRoomCollection().add(copyRoom);
+                    score += room.getScore();
+                }
             }
             childPop.addClass(roomList.getRoomCollection());
 
@@ -111,6 +118,11 @@ public class GArun {
 
 
         childPop.setBestScore(parents.getBestScore());
+        childPop.setSecondaryScore(parents.getSecondaryScore());
+        childPop.setTertiaryScore(parents.getTertiaryScore());
+        System.out.println(childPop.getBestScore());
+        System.out.println(childPop.getSecondaryScore());
+        System.out.println(childPop.getTertiaryScore());
 
         return childPop;
     }
@@ -118,6 +130,8 @@ public class GArun {
     public static boolean selection(Population population) {
 
         double curscore = population.getBestScore();
+        double secondBest =population.getSecondaryScore();
+        double thirdBest =population.getTertiaryScore();
 
         int index = 0;
         for (ArrayList<Room> pop : population.getPopulation()) {
@@ -133,13 +147,20 @@ public class GArun {
             if (bestscore > curscore) {
                 curscore = bestscore;
                 if(curscore!=0) {
-                    population.setSecondBestIndex(population.getBestIndex());
-                    population.setSecondaryScore(curscore);
+             //       population.setSecondBestIndex(population.getBestIndex());
+               //     population.setSecondaryScore(curscore);
                 }
                 population.setBestIndex(index);
                 population.setBestScore(bestscore);
              //   System.out.println(population.getBestScore());
-
+            }else if(bestscore > secondBest && (index > 50 && index <= 80 )){
+                secondBest = bestscore;
+                population.setSecondBestIndex(index);
+                population.setSecondaryScore(bestscore);
+            }else if(bestscore > thirdBest && index >80){
+                thirdBest=bestscore;
+                population.setThirdBestIndex(index);
+                population.setTertiaryScore(bestscore);
             }
             index++;
         }
@@ -192,8 +213,7 @@ public class GArun {
 
     public static int terminate(Population population) {
         double percentCorrect = 0.70;
-        double targetScore = 3000;
-                //population.getPopScore() * percentCorrect;
+        double targetScore = population.getPopScore()*6;
         System.out.println(targetScore);
         int bestScore = 0;
         int index = 0;

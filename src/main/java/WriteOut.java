@@ -173,6 +173,20 @@ public class WriteOut {
                         row=sheet2.createRow(rowIn++);
                         cell = row.createCell(colIn);
                         cell.setCellType(Cell.CELL_TYPE_STRING);
+                        cell.setCellValue("Students of Color ");
+                        cell=row.createCell(colIn+1);
+                        cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+                        cell.setCellValue(counts.get(i++));
+                        row=sheet2.createRow(rowIn++);
+                        cell = row.createCell(colIn);
+                        cell.setCellType(Cell.CELL_TYPE_STRING);
+                        cell.setCellValue("International Students");
+                        cell=row.createCell(colIn+1);
+                        cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+                        cell.setCellValue(counts.get(i++));
+                        row=sheet2.createRow(rowIn++);
+                        cell = row.createCell(colIn);
+                        cell.setCellType(Cell.CELL_TYPE_STRING);
                         cell.setCellValue("Total in wrong");
                         cell=row.createCell(colIn+1);
                         cell.setCellType(Cell.CELL_TYPE_NUMERIC);
@@ -181,10 +195,17 @@ public class WriteOut {
 
             try {
                 //Write the workbook in file system
-                FileOutputStream out = new FileOutputStream(new File("/Users/chrisfernandez/Documents/thesis/allTests.xlsx"));
-                workbook.write(out);
-                out.close();
-                System.out.println(" written successfully on disk.");
+                String username = System.getProperty("user.name");
+                String os=System.getProperty("os.name");
+                FileOutputStream out;
+                if(os.contains("Window")){
+                    out=new FileOutputStream(new File("C:\\Users\\"+username+"\\Documents\\testbook.xlsx"));
+                }else {
+                     out = new FileOutputStream(new File("/Users/" + username + "/Documents/thesis/classAssignments.xlsx"));
+                }
+                    workbook.write(out);
+                    out.close();
+               // System.out.println(" written successfully on disk.");
             } catch (Exception e) {
                 e.printStackTrace();
             }
