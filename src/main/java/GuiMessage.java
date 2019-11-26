@@ -13,7 +13,7 @@ public class GuiMessage extends JFrame {
         this.setLocationRelativeTo(null);
         this.setSize(370, 150);
         this.setForeground(new Color(192, 192, 192));
-        this.setTitle("Access Password Manager");
+        this.setTitle("Class Assignment APP");
         //   this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //     this.pack();
         this.setResizable(false);
