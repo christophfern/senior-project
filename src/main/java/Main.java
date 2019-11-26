@@ -58,7 +58,7 @@ public class Main {
                 message.closeMessage();
 
               //  System.out.println("Took "+(endTime - startTime) + " ns");
-                message1 = new GuiMessage("Process Ended. Written Documents/ClassAssignments");
+                message1 = new GuiMessage("Process Ended. Written Desktop/ClassAssignments.xlsx");
                 message1.toFront();
             }
 
