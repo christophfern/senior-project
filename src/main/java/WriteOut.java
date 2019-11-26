@@ -211,9 +211,9 @@ public class WriteOut {
                 String os=System.getProperty("os.name");
                 FileOutputStream out;
                 if(os.contains("Window")){
-                    out=new FileOutputStream(new File("C:\\Users\\"+username+"\\Documents\\testbook.xlsx"));
+                    out=new FileOutputStream(new File("C:\\Users\\"+username+"\\Desktop\\classAssignments.xlsx"));
                 }else {
-                     out = new FileOutputStream(new File("/Users/" + username + "/Documents/thesis/classAssignments.xlsx"));
+                     out = new FileOutputStream(new File("/Users/" + username + "/Desktop/classAssignments.xlsx"));
                 }
                     workbook.write(out);
                     out.close();
