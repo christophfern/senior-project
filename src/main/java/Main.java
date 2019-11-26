@@ -19,6 +19,7 @@ public class Main {
         boolean continueToProcess = false;
         boolean isUp=false;
 
+
             Window window = new Window();
             number = window.getNumber();
             path = window.getPath();
@@ -32,6 +33,7 @@ public class Main {
 
                 if (valid == null) {
                     message = new GuiMessage("Process Beginning");
+
                     message.toFront();
                     continueToProcess = true;
                 } else if (valid.equals("nExcel")) {
@@ -47,12 +49,15 @@ public class Main {
             try {
                 runAll.run(path, number);
             } catch (Exception e) {
+
                 message1 = new GuiMessage("Process Failed.");
                 failed=true;
                 message1.toFront();
             }
             if(!failed) {
                 message.closeMessage();
+
+              //  System.out.println("Took "+(endTime - startTime) + " ns");
                 message1 = new GuiMessage("Process Ended. Written Documents/ClassAssignments");
                 message1.toFront();
             }
@@ -62,11 +67,6 @@ public class Main {
                 message1 = new GuiMessage("Process Failed. Incorrect Path or number of runs");
                 message1.toFront();
             }
-
-       /* if(!window.isActive()){
-            isUp=true;
-            window.closeWindow();
-        }*/
 
     }
 }

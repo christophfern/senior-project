@@ -14,13 +14,13 @@ public class RunAll {
             System.out.println(path);
             Population population = new Population();
             Pair<ArrayList<Student>, ArrayList<Room>> firstGen = null;
+            long startTime=System.nanoTime();
 
             try {
                 firstGen = ReadIn.readSheet(population, path);
             } catch (Exception e) {
 
             }
-
 
             ArrayList<Student> studentsOrg = firstGen.getKey();
             ArrayList<Room> classesWmcGill = firstGen.getValue();
@@ -53,7 +53,6 @@ public class RunAll {
                 if (!indexToDelete.contains(i)) {
                     students.add(studentsOrg.get(i));
                 }
-
             }
             // System.out.println(students.size());
 
@@ -200,10 +199,8 @@ public class RunAll {
                 }
             }
 
-
-
             try {
-                WriteOut.writeOut(childPop.getPopulation().get(end), sheetNum, roomResults);
+                WriteOut.writeOut(childPop.getPopulation().get(end), sheetNum, roomResults,startTime);
             } catch (Exception e) {
                 System.out.println(e);
                 e.printStackTrace();

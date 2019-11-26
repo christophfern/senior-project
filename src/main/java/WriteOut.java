@@ -16,11 +16,12 @@ public class WriteOut {
 
 
     public static void writeOut(ArrayList<Room> outList, int sheetNum,
-                                TreeMap<String,ArrayList<Integer>> roomResults) throws IOException, InvalidFormatException {
+                                TreeMap<String,ArrayList<Integer>> roomResults,long startTime) throws IOException, InvalidFormatException {
         // Create a Workbook
         //Blank workbook
 
        XSSFSheet sheet= workbook.createSheet("test" + sheetNum);
+
 
         //Create a blank sheet
 
@@ -192,6 +193,17 @@ public class WriteOut {
                         cell.setCellType(Cell.CELL_TYPE_NUMERIC);
                         cell.setCellValue(counts.get(i++));
                     }
+        long endTime = System.nanoTime();
+        double fullTime=(endTime - startTime)*0.000000001;
+
+        System.out.println("made it here");
+        Row row=sheet2.createRow(rowIn++);
+                Cell cell = row.createCell(colIn++);
+                cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+                cell.setCellValue(fullTime);
+                //cell=row.createCell(colIn+1);
+                //cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+               // cell.setCellValue(counts.get(i++));
 
             try {
                 //Write the workbook in file system
