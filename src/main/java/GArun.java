@@ -196,9 +196,21 @@ public class GArun {
                     do {
                         randClass = random.nextInt(list.size());
                     } while (randClass == i);
+
                     randStudent = random.nextInt(list.get(i).getStudentList().size() - 1);
                     randStudent2 = random.nextInt(list.get(randClass).getStudentList().size() - 1);
-                    swapStudents(list.get(i),list.get(randClass), randStudent, randStudent2);
+
+                    if(list.get(randClass).getStudentList().size()<list.get(randClass).getSizeAllowed()){
+
+                        int randomTwo = random.nextInt(100);
+
+                        if(randomTwo<50 && !list.get(randClass).isFull()){
+                            changeStudentClass(list.get(i),list.get(randClass),list.get(i).getStudentList().get(randStudent));
+                        }else {
+                            swapStudents(list.get(i), list.get(randClass), randStudent, randStudent2);
+                        }
+                    }
+
                 }
 
 
@@ -247,6 +259,11 @@ public class GArun {
             room2.getStudentList().set(student2,hold2);
             room1.getStudentList().set(student1,hold);
 
+    }
+
+    private static void changeStudentClass(Room room1,Room room2,Student student){
+        room2.addStudent(student);
+        room1.getStudentList().remove(student);
     }
 }
 

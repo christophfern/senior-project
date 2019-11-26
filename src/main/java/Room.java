@@ -29,7 +29,7 @@ public class Room{
 
         public void addStudent(Student s){
             studentList.add(s);
-            if(studentList.size() >sizeAllowed){
+            if(studentList.size() >=sizeAllowed){
                 setFull(true);
             }
         }
@@ -243,5 +243,6 @@ public class Room{
 
 
         }
+
 
 }

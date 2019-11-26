@@ -56,7 +56,7 @@ public class RunAll {
             }
             // System.out.println(students.size());
 
-            int studentsPerClass = students.size() / classes.size();
+            int studentsPerClass = students.size() / classes.size() + 5;
             double maxScore = classes.size() * students.size();
 
             population.setPopScore(maxScore);
