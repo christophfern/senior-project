@@ -77,15 +77,12 @@ public class Room{
         int numberInthird=0;
         int numberInfourth=0;
         int numberInfifth =0;
-        int conditionalInFirst=0;
         int noCorrectChoice=0;
         int mGenderScore=0;
         int fGenderScore=0;
         int mSoccerCount=0;
         int fSoccerCount=0;
         int footballCount=0;
-        int baseballCount=0;
-        int softballCount=0;
         int mGolfCount=0;
         int fGolfCount=0;
         int mBasketballCount=0;
@@ -136,7 +133,7 @@ public class Room{
                         fCrossCountry++;
                     }
 
-                    //nothing
+
                 }
                 if(curr.getConditionalAdmit()){
                     conditional=true;
@@ -231,15 +228,11 @@ public class Room{
         public void swapStudents(Room switchRoom, int student, int student2){
                 Student hold=new Student(switchRoom.getStudentList().get(student2));
                 Student hold2=new Student(this.studentList.get(student));
-           //  System.out.println(hold);
-             //   System.out.println(this.studentList.get(student));
 
-            //    System.out.println(switchRoom.getStudentList());
-              //  System.out.println(this.studentList);
                 switchRoom.getStudentList().set(student2,hold2);
-             //   System.out.println(switchRoom.getStudentList());
+
                 this.getStudentList().set(student,hold);
-             //   System.out.println(this.studentList);
+
 
 
         }

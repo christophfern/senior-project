@@ -6,6 +6,7 @@ import java.util.*;
 import org.apache.poi.openxml4j.exceptions.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -16,7 +17,7 @@ public class WriteOut {
 
 
     public static void writeOut(ArrayList<Room> outList, int sheetNum,
-                                TreeMap<String,ArrayList<Integer>> roomResults,long startTime) throws IOException, InvalidFormatException {
+                                TreeMap<String,ArrayList<Integer>> roomResults,long startTime, String finalPath) throws IOException, InvalidFormatException {
         // Create a Workbook
         //Blank workbook
 
@@ -25,11 +26,12 @@ public class WriteOut {
 
         //Create a blank sheet
 
-        //This data needs to be written (Object[])
+
         int rowNum=0;
         int colNum=0;
         int index=0;
         int currColumn=0;
+
             for(Room room : outList){
                 Row row;
                 Cell cell;
@@ -48,6 +50,7 @@ public class WriteOut {
 
                     cell.setCellValue(room.getName());
                 }
+                CellStyle cellStyle=workbook.createCellStyle();
 
 
                     for (Student student : room.getStudentList()) {
@@ -63,6 +66,15 @@ public class WriteOut {
                         }
 
                         cell = row.createCell(colNum++);
+
+                            if (student.isCorrectClass()==false) {
+
+                                cellStyle.setFillBackgroundColor(IndexedColors.RED.getIndex());
+                                cellStyle.setFillForegroundColor(IndexedColors.RED.getIndex());
+                                cellStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+                                cell.setCellStyle(cellStyle);
+                            }
+
                         cell.setCellType(Cell.CELL_TYPE_STRING);
                         cell.setCellValue(student.getName());
                         cell = row.createCell(colNum++);
@@ -90,6 +102,7 @@ public class WriteOut {
                         cell.setCellType(Cell.CELL_TYPE_BOOLEAN);
                         cell.setCellValue(student.getConditionalAdmit());
                         colNum = currColumn;
+
                     }
                 index++;
 
@@ -196,14 +209,11 @@ public class WriteOut {
         long endTime = System.nanoTime();
         double fullTime=(endTime - startTime)*0.000000001;
 
-        System.out.println("made it here");
+
         Row row=sheet2.createRow(rowIn++);
                 Cell cell = row.createCell(colIn++);
                 cell.setCellType(Cell.CELL_TYPE_NUMERIC);
                 cell.setCellValue(fullTime);
-                //cell=row.createCell(colIn+1);
-                //cell.setCellType(Cell.CELL_TYPE_NUMERIC);
-               // cell.setCellValue(counts.get(i++));
 
             try {
                 //Write the workbook in file system
@@ -211,13 +221,13 @@ public class WriteOut {
                 String os=System.getProperty("os.name");
                 FileOutputStream out;
                 if(os.contains("Window")){
-                    out=new FileOutputStream(new File("C:\\Users\\"+username+"\\Desktop\\classAssignments.xlsx"));
+                    out=new FileOutputStream(new File("C:\\Users\\"+username+"\\Desktop\\"+finalPath+".xlsx"));
                 }else {
-                     out = new FileOutputStream(new File("/Users/" + username + "/Desktop/classAssignments.xlsx"));
+                     out = new FileOutputStream(new File("/Users/" + username + "/Desktop/"+finalPath+".xlsx"));
                 }
                     workbook.write(out);
                     out.close();
-               // System.out.println(" written successfully on disk.");
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

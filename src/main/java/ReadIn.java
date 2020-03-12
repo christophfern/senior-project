@@ -99,29 +99,6 @@ public class ReadIn {
         }
 
 
-    private static void printCellValue(Cell cell) {
-
-        switch (cell.getCellType()) {
-            case Cell.CELL_TYPE_BOOLEAN:
-                System.out.print(cell.getBooleanCellValue());
-                break;
-            case Cell.CELL_TYPE_STRING:
-                System.out.print(cell.getRichStringCellValue().getString());
-                break;
-            case Cell.CELL_TYPE_NUMERIC:
-                if (DateUtil.isCellDateFormatted(cell)) {
-                    System.out.print(cell.getDateCellValue());
-                } else {
-                    System.out.print(cell.getNumericCellValue());
-                }
-                break;
-
-            default:
-                System.out.print("");
-        }
-
-        System.out.print("\t");
-    }
 
     public static Pair<ArrayList<Student>,ArrayList<Room>> readSheet(Population population,String path) {
         ArrayList<Student> studentList=new ArrayList<Student>();
@@ -129,14 +106,12 @@ public class ReadIn {
         try {
 
 
-          //windows  FileInputStream file = new FileInputStream(new File("C:\\Users\\Chris Fernandez\\Documents\\testbook.xlsx"));
-//            FileInputStream file = new FileInputStream(new File("/Users/chrisfernandez/Documents/testbook.xlsx"));
-            FileInputStream file = new FileInputStream(new File(path));
+       FileInputStream file = new FileInputStream(new File(path));
 
             //Create Workbook instance holding reference to .xlsx file
             XSSFWorkbook workbook = new XSSFWorkbook(file);
 
-            FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
+
 
             //Get first/desired sheet from the workbook
             XSSFSheet sheet = workbook.getSheetAt(0);
@@ -207,7 +182,7 @@ public class ReadIn {
                                                     System.out.println("empty");
                                                 } else {
                                                     student.setGender(cell.getStringCellValue());
-                                                    //  System.out.println(cell.getStringCellValue());
+
                                                 }
 
                                                 break;
@@ -242,7 +217,7 @@ public class ReadIn {
 
                                                 break;
                                             case 9:
-                                                System.out.println("LKJASHDLKJASHD");
+
                                                 if (cell == null) {
 
                                                 } else {
@@ -268,25 +243,15 @@ public class ReadIn {
                                     }
                                 }
                             }
-             //             y  = cell.getStringCellValue();
-            //                break;
 
-
-              //        default:
-                        //do nothing
-
-         //                   break;
-        //            }
 
                     population.addClass(classesList);
                     colNum++;
 
-          //          System.out.println(colNum);
                 }
                 rowNum++;
 
-                 //   System.out.println(studentList.size());
-               //     System.out.println(student.getName());
+
                     studentList.add(student);
 
 

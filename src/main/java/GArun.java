@@ -17,7 +17,7 @@ public class GArun {
 
 
             for (Room r : classList) {
-                //   System.out.println(r);
+
                 Room newRoom = new Room(r);
                 classes.add(newRoom);
             }
@@ -28,7 +28,7 @@ public class GArun {
             for (int i = 0; i < classes.size(); i++) {
                 index.add(i);
             }
-            //    System.out.println(index.size());
+
             Random random = new Random();
 
             for (Student student : students) {
@@ -38,7 +38,7 @@ public class GArun {
                     if (classes.get(i).isFull()) {
                         int remove = index.indexOf(i);
                         if (remove >= 0) {
-                            //    System.out.println(remove);
+
                             index.remove(remove);
                         }
                     }
@@ -54,21 +54,14 @@ public class GArun {
                 }
 
                 if (!classes.get(randomClass).isFull()) {
-
-                    //   System.out.println(student);
                     classes.get(randomClass).addStudent(student);
 
-
                 }
-                //  System.out.println(classes.get(0));
-                //   System.out.println(classes.get(0).getStudentList());
+
             }
 
 
             population.addClass(classes);
-            //      System.out.println(population.getPopulation().size());
-
-            //     population.getPopulation().size();
 
         }
 
@@ -86,7 +79,7 @@ public class GArun {
             RoomList roomList = new RoomList();
             int score = 0;
             if (i <=50) {
-              //  System.out.println(best.getRoomCollection());
+
                 for (Room room : parents.getPopulation().get(parents.getBestIndex())) {
                     Room copyRoom = new Room(room, true);
                     copyRoom.setStudentList((ArrayList<Student>) room.getStudentList().clone());
@@ -95,7 +88,7 @@ public class GArun {
 
                 }
 
-                //      System.out.println(score + "first");
+
             } else if(i<=80){
               for (Room room : parents.getPopulation().get(parents.getSecondBestIndex())) {
                   Room copyRoom = new Room(room, true);
@@ -147,12 +140,11 @@ public class GArun {
             if (bestscore > curscore) {
                 curscore = bestscore;
                 if(curscore!=0) {
-             //       population.setSecondBestIndex(population.getBestIndex());
-               //     population.setSecondaryScore(curscore);
+
                 }
                 population.setBestIndex(index);
                 population.setBestScore(bestscore);
-             //   System.out.println(population.getBestScore());
+
             }else if(bestscore > secondBest && (index > 50 && index <= 80 )){
                 secondBest = bestscore;
                 population.setSecondBestIndex(index);
