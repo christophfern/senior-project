@@ -1,4 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: /Users/chrisfernandez/IdeaProjects/Senior_Thesis/src/main/ja
- va
+com.chris.Main-Class: src/main/java
 
