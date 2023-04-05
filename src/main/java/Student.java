@@ -13,6 +13,7 @@ public class Student{
     private String sportPlayed="";
     private String race="";
     private boolean isInternational=false;
+    private boolean correctClass;
 
 
     Student(){
@@ -139,5 +140,10 @@ public class Student{
             return this.isInternational;
         }
 
-
+    public boolean isCorrectClass() {
+        return correctClass;
+    }
+    public void setCorrectClass(boolean c){
+        this.correctClass=c;
+    }
 }

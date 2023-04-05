@@ -1,14 +1,4 @@
 
-
-
-import java.awt.*;
-import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.TreeMap;
-
-
-import javax.swing.*;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -16,13 +6,20 @@ public class Main {
         RunAll runAll = new RunAll();
         String path;
         String number;
-        boolean continueToProcess = false;
-        boolean isUp=false;
+        String finalPath;
+
+
 
 
             Window window = new Window();
             number = window.getNumber();
             path = window.getPath();
+            finalPath=window.getFinalPath();
+
+            if(finalPath==null || finalPath==""){
+                finalPath="classAssignmentsLists";
+            }
+
             GuiMessage message = null;
             if (path != null && number != null) {
 
@@ -35,7 +32,7 @@ public class Main {
                     message = new GuiMessage("Process Beginning");
 
                     message.toFront();
-                    continueToProcess = true;
+
                 } else if (valid.equals("nExcel")) {
                     message = new GuiMessage("Not an Excel File. Please Try again");
                     message.toFront();
@@ -47,7 +44,7 @@ public class Main {
             GuiMessage message1;
                 boolean failed=false;
             try {
-                runAll.run(path, number);
+                runAll.run(path, number,finalPath);
             } catch (Exception e) {
 
                 message1 = new GuiMessage("Process Failed.");
@@ -58,7 +55,7 @@ public class Main {
                 message.closeMessage();
 
               //  System.out.println("Took "+(endTime - startTime) + " ns");
-                message1 = new GuiMessage("Process Ended. Written Desktop/ClassAssignments.xlsx");
+                message1 = new GuiMessage("Process Ended. Written to Desktop/" + finalPath);
                 message1.toFront();
             }
 
